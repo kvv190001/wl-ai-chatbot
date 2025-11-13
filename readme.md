@@ -1,24 +1,17 @@
-<h1>Chatbot with RAG and LangChain</h1>
-
-<h2>Watch the full tutorial on my YouTube Channel</h2>
-<div>
-
-<a href="https://www.youtube.com/watch?v=xf3gAFclwqo">
-    <img src="thumbnail_small.png" alt="Thomas Janssen Youtube" width="200"/>
-</a>
-</div>
+<h1>WorldLink AI Chatbot</h1>
 
 <h2>Prerequisites</h2>
 <ul>
   <li>Python 3.11+</li>
+  <li>"Desktop development with C++" Wordload in VSCode</li>
 </ul>
 
 <h2>Installation</h2>
 <h3>1. Clone the repository:</h3>
 
 ```
-git clone https://github.com/ThomasJanssen-tech/Chatbot-with-RAG-and-LangChain.git
-cd Chatbot-with-RAG-and-LangChain
+git clone https://github.com/kvv190001/wl-ai-chatbot.git
+cd wl-ai-chatbot
 ```
 
 <h3>2. Create a virtual environment</h3>
@@ -40,16 +33,20 @@ venv\Scripts\Activate
 pip install -r requirements.txt
 ```
 
-<h3>5. Add OpenAI API Key</h3>
-Rename the .env.example file to .env
-Add your OpenAI API Key
+<h3>5. Add Google Gemini API Key</h3>
+Create a .env file
+Add your Google Gemini API Key using this format:
+
+```
+GOOGLE_API_KEY = "your-key-here"
+```
 
 <h2>Executing the scripts</h2>
 
 - Open a terminal in VS Code
 
 - Execute the following command:
-
+&
 ```
 python ingest_database.py
 python chatbot.py
