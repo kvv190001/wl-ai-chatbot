@@ -1,4 +1,5 @@
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+# from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 import gradio as gr
 
@@ -10,10 +11,12 @@ load_dotenv()
 DATA_PATH = r"data"
 CHROMA_PATH = r"chroma_db"
 
-embeddings_model = OpenAIEmbeddings(model="text-embedding-3-large")
+# embeddings_model = OpenAIEmbeddings(model="text-embedding-3-large")
+embeddings_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
 # initiate the model
-llm = ChatOpenAI(temperature=0.5, model='gpt-4o-mini')
+# llm = ChatOpenAI(temperature=0.5, model='gpt-4o-mini')
+llm = ChatGoogleGenerativeAI(temperature=0.5, model="gemini-2.5-flash")
 
 # connect to the chromadb
 vector_store = Chroma(

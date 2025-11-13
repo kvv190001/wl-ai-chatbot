@@ -1,8 +1,11 @@
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai.embeddings import OpenAIEmbeddings
+# from langchain_openai.embeddings import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from uuid import uuid4
+from dotenv import load_dotenv
+import os
 
 # import the .env file
 from dotenv import load_dotenv
@@ -13,7 +16,8 @@ DATA_PATH = r"data"
 CHROMA_PATH = r"chroma_db"
 
 # initiate the embeddings model
-embeddings_model = OpenAIEmbeddings(model="text-embedding-3-large")
+# embeddings_model = OpenAIEmbeddings(model="text-embedding-3-large")
+embeddings_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
 # initiate the vector store
 vector_store = Chroma(
