@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import PyPDFDirectoryLoader
+from langchain_community.document_loaders import PyPDFDirectoryLoader, DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 # from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -26,10 +26,13 @@ vector_store = Chroma(
     persist_directory=CHROMA_PATH,
 )
 
-# loading the PDF document
-loader = PyPDFDirectoryLoader(DATA_PATH)
+# loading the PDF, txt document
+# loader = PyPDFDirectoryLoader(DATA_PATH)
+txt_loader = DirectoryLoader(DATA_PATH, glob="**/*.txt", loader_cls=TextLoader)
 
-raw_documents = loader.load()
+# raw_documents = loader.load()
+raw_documents = txt_loader.load()
+
 
 # splitting the document
 text_splitter = RecursiveCharacterTextSplitter(

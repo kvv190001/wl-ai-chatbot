@@ -46,8 +46,19 @@ GOOGLE_API_KEY = "your-key-here"
 - Open a terminal in VS Code
 
 - Execute the following command:
-&
+
 ```
 python ingest_database.py
 python chatbot.py
+```
+
+<h2>Update WL website knowledge</h2>
+
+<h3>Executing the script</h3>
+
+- Delete worldlinklabs_full_text.txt
+- Execute the following command: 
+
+```
+python scrape_worldlinklabs.py
 ```
