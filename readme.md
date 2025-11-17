@@ -49,8 +49,18 @@ GOOGLE_API_KEY = "your-key-here"
 
 ```
 python ingest_database.py
+```
+- Test the UI
+
+```
 python chatbot.py
 ```
+- Run the FastAPI server
+
+```
+uvicorn chatbot_api:app --host 0.0.0.0 --port 8000
+```
+
 
 <h2>Update WL website knowledge</h2>
 
@@ -62,3 +72,4 @@ python chatbot.py
 ```
 python scrape_worldlinklabs.py
 ```
+- Ask an AI to help clean up the data scraped, make sure it's cp1252 encoding friendly
