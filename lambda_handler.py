@@ -1,14 +1,14 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+import json
+import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 
 load_dotenv()
 
-# Configuration
-CHROMA_PATH = "chroma_db"
+# Load ChromaDB directory packaged with function
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
 
 # Embeddings + LLM
 embeddings_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
@@ -25,25 +25,10 @@ vector_store = Chroma(
 num_results = 5
 retriever = vector_store.as_retriever(search_kwargs={'k': num_results})
 
-# FastAPI app
-app = FastAPI()
-
-# CORS FIX
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],          # or ["http://localhost:3000"] for stricter security
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-class Query(BaseModel):
-    question: str
-
-@app.post("/ask")
-async def ask_question(payload: Query):
-    question = payload.question
+def lambda_handler(event,context):
+    # event["body"] is a JSON string in API Gateway (REST)    
+    body = json.loads(event.get("body", "{}"))
+    question = body.get("question", "")
 
     # retrieve the relevant chunks based on the question asked
     docs = retriever.invoke(question)
@@ -78,6 +63,14 @@ async def ask_question(payload: Query):
     The Knowledge: {knowledge}
     """
 
-    # LLM answer (non-streaming for API)
     response = llm.invoke(rag_prompt)
-    return {"answer": response.content}
+    answer = response.content
+
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        "body": json.dumps({"answer": answer})
+    }

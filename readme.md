@@ -61,6 +61,8 @@ python chatbot.py
 uvicorn chatbot_api:app --host 0.0.0.0 --port 8000
 ```
 
+- Test the API at this link: http://localhost:8000/docs
+
 
 <h2>Update WL website knowledge</h2>
 
