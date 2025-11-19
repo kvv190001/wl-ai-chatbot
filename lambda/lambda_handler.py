@@ -2,24 +2,19 @@ import json
 import os
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 
 load_dotenv()
 
-# Load ChromaDB directory packaged with function
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
+FAISS_PATH = os.path.join(BASE_DIR, "faiss_index")
 
 # Embeddings + LLM
 embeddings_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 llm = ChatGoogleGenerativeAI(temperature=0.5, model="gemini-2.5-flash")
 
-# Connect to Chroma
-vector_store = Chroma(
-    collection_name="example_collection",
-    embedding_function=embeddings_model,
-    persist_directory=CHROMA_PATH,
-)
+# Connect to FAISS
+vector_store = FAISS.load_local(FAISS_PATH, embeddings_model, allow_dangerous_deserialization=True)
 
 # Set up the vectorstore to be the retriever
 num_results = 5

@@ -1,0 +1,9 @@
+langchain-community==0.4.1
+langchain-core==1.0.4
+langchain-google-genai==3.0.3
+langchain-text-splitters==1.0.0
+python-dotenv==1.2.1
+google-ai-generativelanguage==0.9.0
+google-auth==2.43.0
+google-api-core==2.28.1
+faiss-cpu==1.13.0
